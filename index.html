@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyRamadan Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            --sz: 4px;
+            --sp: 5s;
+            --b1: #211e1e;
+            --b2: #1c1b18;
+            --b3: #0c0b0a;
+            --b4: #0c0b0ae0;
+            --c1: #ffffff;
+            --ts: 50% / calc(var(--sz) * 17.5) calc(var(--sz) * 29.5);
+            background:
+                radial-gradient(circle at 50% 50%, var(--b4) calc(var(--sz) * 1), #fff0 calc(var(--sz) * 8)) var(--ts),
+                radial-gradient(circle at 0% 0%, var(--b4) calc(var(--sz) * 1), #fff0 calc(var(--sz) * 8)) var(--ts),
+                radial-gradient(circle at 0% 100%, var(--b4) calc(var(--sz) * 1), #fff0 calc(var(--sz) * 8)) var(--ts),
+                radial-gradient(circle at 100% 0%, var(--b4) calc(var(--sz) * 1), #fff0 calc(var(--sz) * 8)) var(--ts),
+                radial-gradient(circle at 100% 100%, var(--b4) calc(var(--sz) * 1), #fff0 calc(var(--sz) * 8)) var(--ts),
+                conic-gradient(from 90deg at 97.5% 67%, var(--c1) 0 87.5deg, #fff0 88deg 100%) var(--ts),
+                conic-gradient(from 90deg at 97.5% 67%, var(--c1) 0 87.5deg, #fff0 88deg 100%) var(--ts),
+                conic-gradient(from 182.5deg at 2.5% 67%, #fff0 0 0deg, var(--c1) 0.5deg 90deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 182.5deg at 2.5% 67%, #fff0 0 0deg, var(--c1) 0.5deg 90deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 270deg at 2.5% 33%, var(--c1) 0 87.5deg, #fff0 88deg 100%) var(--ts),
+                conic-gradient(from 270deg at 2.5% 33%, var(--c1) 0 87.5deg, #fff0 88deg 100%) var(--ts),
+                conic-gradient(from 2.5deg at 97.5% 33%, #fff0 0 0deg, var(--c1) 0.5deg 90deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 2.5deg at 97.5% 33%, #fff0 0 0deg, var(--c1) 0.5deg 90deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 116.5deg at 50% 85.5%, var(--b1) 0 127deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 116.5deg at 50% 85.5%, var(--b1) 0 127deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 116.5deg at 50% 85.5%, var(--b1) 0 127deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 120deg at 50% 83%, var(--c1) 0 120deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from -63.5deg at 50% 14.5%, var(--b1) 0 127deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from -63.5deg at 50% 14.5%, var(--b1) 0 127deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from -63.5deg at 50% 14.5%, var(--b1) 0 127deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from -60deg at 50% 17%, var(--c1) 0 120deg, #fff0 0 100%) var(--ts),
+                conic-gradient(from 0deg at 50% 50%, #fff0 0 2deg, var(--b2) 2.5deg 57.5deg, #fff0 58deg 62.5deg, 
+                    var(--b1) 63deg 117.5deg, #fff0 118deg 122.5deg, var(--b3) 123deg 177.5deg, #fff0 178deg 182deg, 
+                    var(--b2) 182.5deg 237.5deg, #fff0 0 242.5deg, var(--b1) 243deg 297.5deg, #fff0 298deg 302.5deg, 
+                    var(--b3) 303deg 357.5deg, #fff0 358deg 360deg) var(--ts),
+                var(--c1);
+            animation: colors var(--sp) linear 0s infinite;
+        }
+
+        @keyframes colors {
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .hover-effect {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(20px);
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            z-index: 9999;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-section {
+            width: 350px;
+            padding: 20px;
+            background: #272727;
+            border-radius: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 16px rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            color: #fff;
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            background: #3a3a3a;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        select:hover, select:focus {
+            background: #424242;
+            transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+        }
+
+        #class-input {
+            position: relative;
+            margin-top: 15px;
+        }
+
+        #class-input input {
+            background: #010201;
+            border: none;
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #class-input input::placeholder {
+            color: #c0b9c0;
+        }
+
+        #class-input input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(207, 48, 170, 0.5);
+        }
+
+        .glow {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 120%;
+            height: 120%;
+            filter: blur(30px);
+            opacity: 0.4;
+            background: conic-gradient(#000, #402fb5 5%, #000 38%, #000 50%, #cf30aa 60%, #000 87%);
+            transition: all 2s;
+        }
+
+        #class-input:hover .glow {
+            transform: rotate(120deg);
+        }
+
+        .schedule-list {
+            height: 150px;
+            overflow-y: auto;
+            margin-top: 20px;
+            background: #3a3a3a;
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .output-phone {
+            width: 350px;
+            height: 600px;
+            padding: 20px;
+            background: #272727;
+            border-radius: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 16px rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        #day-header {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        #output-list {
+            height: 500px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            background: #3a3a3a;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            min-width: 200px;
+            max-width: 320px;
+            height: auto;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-time {
+            width: 120px;
+            font-size: 14px;
+            color: #fff;
+            text-align: left;
+            padding-right: 10px;
+            border-right: 1px solid #555;
+            white-space: pre-line; /* Allows line breaks */
+        }
+
+        .schedule-class {
+            flex: 1;
+            font-size: 16px;
+            color: #fff;
+            padding-left: 10px;
+            white-space: normal; /* Allows text to wrap */
+            word-wrap: break-word; /* Breaks long words if needed */
+        }
+
+        /* Add Schedule Button Styling */
+        #add-btn {
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px 35px;
+            background: #4CAF50;
+            font-size: 17px;
+            font-weight: 500;
+            color: #181818;
+            border: 3px solid #4CAF50;
+            border-radius: 8px;
+            box-shadow: 0 0 0 #4CAF508c;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        #add-btn .star-1 {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 25px;
+            height: auto;
+            filter: drop-shadow(0 0 0 #fffdef);
+            z-index: -5;
+            transition: all 1s cubic-bezier(0.05, 0.83, 0.43, 0.96);
+        }
+
+        #add-btn .star-2 {
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            width: 15px;
+            height: auto;
+            filter: drop-shadow(0 0 0 #fffdef);
+            z-index: -5;
+            transition: all 1s cubic-bezier(0, 0.4, 0, 1.01);
+        }
+
+        #add-btn .star-3 {
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            width: 5px;
+            height: auto;
+            filter: drop-shadow(0 0 0 #fffdef);
+            z-index: -5;
+            transition: all 1s cubic-bezier(0, 0.4, 0, 1.01);
+        }
+
+        #add-btn .star-4 {
+            position: absolute;
+            top: 20%;
+            left: 40%;
+            width: 8px;
+            height: auto;
+            filter: drop-shadow(0 0 0 #fffdef);
+            z-index: -5;
+            transition: all 0.8s cubic-bezier(0, 0.4, 0, 1.01);
+        }
+
+        #add-btn .star-5 {
+            position: absolute;
+            top: 25%;
+            left: 45%;
+            width: 15px;
+            height: auto;
+            filter: drop-shadow(0 0 0 #fffdef);
+            z-index: -5;
+            transition: all 0.6s cubic-bezier(0, 0.4, 0, 1.01);
+        }
+
+        #add-btn .star-6 {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            width: 5px;
+            height: auto;
+            filter: drop-shadow(0 0 0 #fffdef);
+            z-index: -5;
+            transition: all 0.8s ease;
+        }
+
+        #add-btn:hover {
+            background: transparent;
+            color: #4CAF50;
+            box-shadow: 0 0 25px #4CAF508c;
+        }
+
+        #add-btn:hover .star-1 { top: -80%; left: -30%; filter: drop-shadow(0 0 10px #fffdef); z-index: 2; }
+        #add-btn:hover .star-2 { top: -25%; left: 10%; filter: drop-shadow(0 0 10px #fffdef); z-index: 2; }
+        #add-btn:hover .star-3 { top: 55%; left: 25%; filter: drop-shadow(0 0 10px #fffdef); z-index: 2; }
+        #add-btn:hover .star-4 { top: 30%; left: 80%; filter: drop-shadow(0 0 10px #fffdef); z-index: 2; }
+        #add-btn:hover .star-5 { top: 25%; left: 115%; filter: drop-shadow(0 0 10px #fffdef); z-index: 2; }
+        #add-btn:hover .star-6 { top: 5%; left: 60%; filter: drop-shadow(0 0 10px #fffdef); z-index: 2; }
+
+        .fil0 { fill: #fffdef; }
+
+        /* Clear Schedule Button Styling */
+        #clear-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgb(20, 20, 20);
+            border: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+            cursor: pointer;
+            transition-duration: .3s;
+            overflow: hidden;
+            position: relative;
+            margin-top: 20px;
+            margin-left: auto;
+        }
+
+        #clear-btn .svgIcon { width: 12px; transition-duration: .3s; }
+        #clear-btn .svgIcon path { fill: white; }
+        #clear-btn:hover {
+            width: 140px;
+            border-radius: 50px;
+            transition-duration: .3s;
+            background-color: rgb(255, 69, 69);
+            align-items: center;
+        }
+        #clear-btn:hover .svgIcon { width: 50px; transition-duration: .3s; transform: translateY(60%); }
+        #clear-btn::before {
+            position: absolute;
+            top: -20px;
+            content: "Clear";
+            color: white;
+            transition-duration: .3s;
+            font-size: 2px;
+        }
+        #clear-btn:hover::before {
+            font-size: 13px;
+            opacity: 1;
+            transform: translateY(30px);
+            transition-duration: .3s;
+        }
+
+        /* Download PNG Button Styling */
+        #download-btn-container {
+            position: absolute;
+            bottom: 20px;
+            width: calc(100% - 40px);
+            left: 20px;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #download-btn {
+            background-color: transparent;
+            border: 2px solid #007BFF;
+            display: flex;
+            align-items: center;
+            border-radius: 50px;
+            width: 160px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            padding: 5px;
+            position: relative;
+        }
+
+        #download-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            width: 8px;
+            height: 8px;
+            transition: all 0.4s ease;
+            border-radius: 100%;
+            margin: auto;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #download-btn .input { display: none; }
+        #download-btn .title {
+            font-size: 17px;
+            color: #fff;
+            transition: all 0.4s ease;
+            position: absolute;
+            right: 18px;
+            bottom: 14px;
+            text-align: center;
+        }
+        #download-btn .title:last-child { opacity: 0; visibility: hidden; }
+        #download-btn .circle {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            background-color: #007BFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s ease;
+            position: relative;
+            box-shadow: 0 0 0 0 rgb(255, 255, 255);
+            overflow: hidden;
+        }
+        #download-btn .circle .icon {
+            color: #fff;
+            width: 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+        #download-btn .circle .square {
+            aspect-ratio: 1;
+            width: 15px;
+            border-radius: 2px;
+            background-color: #fff;
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
+        }
+        #download-btn .circle::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #0056b3;
+            width: 100%;
+            height: 0;
+            transition: all 0.4s ease;
+        }
+        #download-btn:has(.input:checked) { width: 57px; animation: reset 0.4s ease 3.5s forwards; }
+        #download-btn:has(.input:checked)::before { animation: rotate 3s ease-in-out 0.4s forwards; }
+        #download-btn .input:checked + .circle {
+            animation: pulse 1s forwards, circleDelete 0.2s ease 3.5s forwards;
+            rotate: 180deg;
+        }
+        #download-btn .input:checked + .circle::before { animation: installing 3s ease-in-out forwards; }
+        #download-btn .input:checked + .circle .icon { opacity: 0; visibility: hidden; }
+        #download-btn .input:checked ~ .circle .square { opacity: 1; visibility: visible; }
+        #download-btn .input:checked ~ .title { opacity: 0; visibility: hidden; }
+        #download-btn .input:checked ~ .title:last-child { animation: showResetMessage 0.4s ease 3.5s forwards; }
+
+        @keyframes pulse {
+            0% { scale: 0.95; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { scale: 1; box-shadow: 0 0 0 16px rgba(255, 255, 255, 0); }
+            100% { scale: 0.95; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+        @keyframes installing { from { height: 0; } to { height: 100%; } }
+        @keyframes rotate {
+            0% { transform: rotate(-90deg) translate(27px) rotate(0); opacity: 1; visibility: visible; }
+            99% { transform: rotate(270deg) translate(27px) rotate(270deg); opacity: 1; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        @keyframes reset { 100% { width: 160px; border-color: #007BFF; } }
+        @keyframes circleDelete { 100% { opacity: 0; visibility: hidden; } }
+        @keyframes showResetMessage { 100% { opacity: 1; visibility: visible; right: 18px; } }
+    </style>
+</head>
+<body>
+    <div class="hover-effect" id="hover-effect"></div>
+    <div class="container">
+        <!-- Left Side: Input Fields -->
+        <div class="input-section">
+            <h2>Input Schedule</h2>
+            <label for="day-select">Day:</label>
+            <select id="day-select">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+            </select>
+
+            <label for="start-time">Start Time:</label>
+            <select id="start-time">
+                <option value="8:30 AM">8:30 AM</option>
+                <option value="9:30 AM">9:30 AM</option>
+                <option value="10:30 AM">10:30 AM</option>
+                <option value="11:30 AM">11:30 AM</option>
+                <option value="12:30 PM">12:30 PM</option>
+                <option value="1:30 PM">1:30 PM</option>
+                <option value="2:30 PM">2:30 PM</option>
+                <option value="3:30 PM">3:30 PM</option>
+                <option value="4:30 PM">4:30 PM</option>
+                <option value="5:30 PM">5:30 PM</option>
+                <option value="6:30 PM">6:30 PM</option>
+                <option value="7:30 PM">7:30 PM</option>
+                <option value="8:30 PM">8:30 PM</option>
+            </select>
+
+            <label for="end-time">End Time:</label>
+            <select id="end-time">
+                <option value="9:30 AM">9:30 AM</option>
+                <option value="10:30 AM">10:30 AM</option>
+                <option value="11:30 AM">11:30 AM</option>
+                <option value="12:30 PM">12:30 PM</option>
+                <option value="1:30 PM">1:30 PM</option>
+                <option value="2:30 PM">2:30 PM</option>
+                <option value="3:30 PM">3:30 PM</option>
+                <option value="4:30 PM">4:30 PM</option>
+                <option value="5:30 PM">5:30 PM</option>
+                <option value="6:30 PM">6:30 PM</option>
+                <option value="7:30 PM">7:30 PM</option>
+                <option value="8:30 PM">8:30 PM</option>
+            </select>
+
+            <label for="class">Class Name:</label>
+            <div id="class-input">
+                <input type="text" id="class" placeholder="e.g., Physics">
+                <div class="glow"></div>
+            </div>
+
+            <button id="add-btn">
+                Add Schedule
+                <div class="star-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1"
+                        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                        viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Layer_x0020_1">
+                            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                            <path class="fil0"
+                                d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="star-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1"
+                        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                        viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Layer_x0020_1">
+                            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                            <path class="fil0"
+                                d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="star-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1"
+                        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                        viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Layer_x0020_1">
+                            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                            <path class="fil0"
+                                d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="star-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1"
+                        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                        viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Layer_x0020_1">
+                            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                            <path class="fil0"
+                                d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="star-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1"
+                        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                        viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Layer_x0020_1">
+                            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                            <path class="fil0"
+                                d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="star-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1"
+                        style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+                        viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g id="Layer_x0020_1">
+                            <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                            <path class="fil0"
+                                d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z">
+                            </path>
+                        </g>
+                    </svg>
+                </div>
+            </button>
+
+            <button id="clear-btn">
+                <svg viewBox="0 0 448 512" class="svgIcon">
+                    <path
+                        d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z">
+                    </path>
+                </svg>
+            </button>
+
+            <div id="input-list" class="schedule-list"></div>
+        </div>
+
+        <!-- Right Side: Output (Phone UI) -->
+        <div class="output-phone">
+            <h2 id="day-header">Ramadan Schedule</h2>
+            <div id="output-list"></div>
+            <div id="download-btn-container">
+                <label id="download-btn">
+                    <input type="checkbox" class="input" />
+                    <span class="circle">
+                        <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M12 19V5m0 14-4-4m4 4 4-4"></path>
+                        </svg>
+                        <div class="square"></div>
+                    </span>
+                    <p class="title">Download</p>
+                    <p class="title">Download</p>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let schedule = [];
+
+            const ramadanTimes = {
+                regular: {
+                    "8:30 AM": "8:00 AM - 8:40 AM",
+                    "9:30 AM": "8:50 AM - 9:30 AM",
+                    "10:30 AM": "9:40 AM - 10:20 AM",
+                    "11:30 AM": "10:30 AM - 11:10 AM",
+                    "12:30 PM": "11:20 AM - 12:00 PM",
+                    "1:30 PM": "12:10 PM - 12:50 PM",
+                    "2:30 PM": "1:00 PM - 1:40 PM",
+                    "3:30 PM": "1:50 PM - 2:30 PM",
+                    "4:30 PM": "2:40 PM - 3:20 PM",
+                    "5:30 PM": "3:30 PM - 4:10 PM",
+                    "6:30 PM": "4:20 PM - 5:00 PM",
+                    "7:30 PM": "5:10 PM - 5:50 PM",
+                    "8:30 PM": "6:00 PM - 6:40 PM"
+                },
+                friday: {
+                    "8:30 AM": "8:00 AM - 8:40 AM",
+                    "9:30 AM": "8:50 AM - 9:30 AM",
+                    "10:30 AM": "9:40 AM - 10:20 AM",
+                    "11:30 AM": "10:30 AM - 11:10 AM",
+                    "12:30 PM": "1:00 PM - 1:40 PM",
+                    "1:30 PM": "1:50 PM - 2:30 PM",
+                    "2:30 PM": "11:20 AM - 12:00 PM",
+                    "3:30 PM": "12:10 PM - 12:50 PM",
+                    "4:30 PM": "2:30 PM - 3:10 PM",
+                    "5:30 PM": "3:20 PM - 4:00 PM",
+                    "6:30 PM": "4:10 PM - 4:50 PM",
+                    "7:30 PM": "5:00 PM - 5:40 PM",
+                    "8:30 PM": "5:50 PM - 6:30 PM"
+                }
+            };
+
+            function getRamadanTimeRange(day, startTime, endTime) {
+                const times = day === "Friday" ? ramadanTimes.friday : ramadanTimes.regular;
+                const allTimes = Object.keys(times);
+                const startIndex = allTimes.indexOf(startTime);
+                const endIndex = allTimes.indexOf(endTime);
+
+                if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+                    return { start: "Invalid", end: "Invalid" };
+                }
+
+                const slots = allTimes.slice(startIndex, endIndex).map(time => times[time]); // Up to but not including endTime
+                const ramadanStart = slots[0].split(" - ")[0]; // Start of first slot
+                const ramadanEnd = slots.length > 1 ? slots[slots.length - 1].split(" - ")[1] : slots[0].split(" - ")[1]; // End of last slot before endTime
+
+                return { start: ramadanStart, end: ramadanEnd };
+            }
+
+            function addSchedule() {
+                let day = document.getElementById("day-select").value;
+                let startTime = document.getElementById("start-time").value;
+                let endTime = document.getElementById("end-time").value;
+                let className = document.getElementById("class").value.trim();
+
+                if (!className) {
+                    alert("Please enter a class name.");
+                    return;
+                }
+
+                let startIndex = Array.from(document.getElementById("start-time").options)
+                    .map(opt => opt.value).indexOf(startTime);
+                let endIndex = Array.from(document.getElementById("end-time").options)
+                    .map(opt => opt.value).indexOf(endTime);
+                if (endIndex <= startIndex) {
+                    alert("End time must be after start time.");
+                    return;
+                }
+
+                schedule.push({ day, startTime, endTime, className });
+
+                document.getElementById("input-list").innerHTML += 
+                    `<p>${day}, ${startTime} - ${endTime}, ${className}</p>`;
+
+                let outputHTML;
+                if (day === "Friday" && startTime === "12:30 PM" && endTime === "2:30 PM") {
+                    outputHTML = `
+                        <div class="schedule-item" style="width: 200px;">
+                            <div class="schedule-time">1:00 PM -\n12:00 PM</div>
+                            <div class="schedule-class">Friday Prayer Break</div>
+                        </div>
+                    `;
+                } else {
+                    const { start: ramadanStart, end: ramadanEnd } = getRamadanTimeRange(day, startTime, endTime);
+                    let timeDisplay = `${ramadanStart} -\n${ramadanEnd}`;
+                    let classLength = className.length;
+                    let boxWidth = Math.min(Math.max(200, classLength * 10 + 130), 320);
+
+                    outputHTML = `
+                        <div class="schedule-item" style="width: ${boxWidth}px;">
+                            <div class="schedule-time">${timeDisplay}</div>
+                            <div class="schedule-class">${className}</div>
+                        </div>
+                    `;
+                }
+
+                document.getElementById("output-list").innerHTML += outputHTML;
+                document.getElementById("day-header").textContent = `${day} Ramadan Schedule`;
+                document.getElementById("class").value = "";
+            }
+
+            function clearSchedule() {
+                schedule = [];
+                document.getElementById("input-list").innerHTML = "";
+                document.getElementById("output-list").innerHTML = "";
+                document.getElementById("day-header").textContent = "Ramadan Schedule";
+            }
+
+            function downloadPNG() {
+                let outputPhone = document.querySelector(".output-phone");
+                let downloadBtn = document.getElementById("download-btn");
+                let checkbox = downloadBtn.querySelector(".input");
+
+                if (schedule.length === 0) {
+                    alert("Add some classes first!");
+                    return;
+                }
+
+                checkbox.checked = true;
+
+                html2canvas(outputPhone, {
+                    scale: 2,
+                    backgroundColor: null
+                }).then(canvas => {
+                    let link = document.createElement("a");
+                    link.download = "ramadan_schedule.png";
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+
+                    setTimeout(() => {
+                        checkbox.checked = false;
+                    }, 3500);
+                }).catch(err => {
+                    console.error("Screenshot failed:", err);
+                    alert("Failed to capture screenshot.");
+                    checkbox.checked = false;
+                });
+            }
+
+            const hoverEffect = document.getElementById("hover-effect");
+            document.addEventListener("mousemove", (e) => {
+                hoverEffect.style.left = `${e.clientX}px`;
+                hoverEffect.style.top = `${e.clientY}px`;
+            });
+
+            document.getElementById("add-btn").addEventListener("click", addSchedule);
+            document.getElementById("clear-btn").addEventListener("click", clearSchedule);
+            document.getElementById("download-btn").addEventListener("click", downloadPNG);
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
+
+<div class="card">
+    <div class="border"></div>
+    <div class="content">
+      <div class="logo">
+        <span class="logo-text">S</span>
+        <span class="logo-rest">AGI</span>
+        <span class="trail"></span>
+      </div>
+      <span class="logo-bottom-text">International EXCO</span>
+    </div>
+    <span class="bottom-text">UniKL MIIT</span>
+</div>
+
+<style>
+  .card {
+    width: 300px;
+    height: 200px;
+    background: #243137;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: grid;
+    place-content: center;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .content {
+    transition: all 0.5s ease-in-out;
+  }
+
+  .content .logo {
+    height: 35px;
+    position: relative;
+    width: 25px; /* Adjusted to fit just 'S' snugly */
+    overflow: hidden;
+    transition: all 1s ease-in-out;
+    font-family: Arial, sans-serif; /* Consistent font for legibility */
+    font-size: 35px; /* Large size for 'S' and 'SAGI' */
+    line-height: 35px;
+    color: #bd9f67; /* Gold color */
+    display: flex; /* Flexbox to remove gaps */
+    align-items: center;
+  }
+
+  .content .logo .logo-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25px; /* Matches initial 'S' width */
+    flex-shrink: 0; /* Prevents 'S' from shrinking */
+  }
+
+  .content .logo .logo-rest {
+    position: absolute;
+    left: 25px; /* Tight against 'S' with no gap */
+    top: 0;
+    width: 60px; /* Adjusted for 'AGI' width */
+    opacity: 0; /* Hidden initially */
+    transform: translateX(100%); /* Starts off-screen to the right */
+    transition: opacity 0s, transform 1s ease-in-out; /* Slide effect */
+    flex-shrink: 0; /* Prevents 'AGI' from shrinking */
+  }
+
+  .content .logo .trail {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+  }
+
+  .content .logo-bottom-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 30px;
+    color: #bd9f67;
+    padding-left: 8px;
+    font-size: 11px;
+    opacity: 0;
+    letter-spacing: none;
+    transition: all 0.5s ease-in-out 0.5s;
+  }
+
+  .border {
+    position: absolute;
+    inset: 0px;
+    border: 2px solid #bd9f67;
+    opacity: 0;
+    transform: rotate(10deg);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .bottom-text {
+    position: absolute;
+    left: 50%;
+    bottom: 13px;
+    transform: translateX(-50%);
+    font-size: 6px;
+    text-transform: uppercase;
+    padding: 0px 5px 0px 8px;
+    color: #bd9f67;
+    background: #243137;
+    opacity: 0;
+    letter-spacing: 7px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .card:hover {
+    border-radius: 0;
+    transform: scale(1.1);
+  }
+
+  .card:hover .logo {
+    width: 85px; /* Fits 'SAGI' snugly (25px for 'S' + 60px for 'AGI') */
+    animation: opacity 1s ease-in-out;
+  }
+
+  .card:hover .logo .logo-rest {
+    opacity: 1; /* Shows 'AGI' */
+    transform: translateX(0); /* Slides 'AGI' into place */
+    transition: opacity 0s 0.2s, transform 1s ease-in-out; /* Delay opacity slightly */
+  }
+
+  .card:hover .border {
+    inset: 15px;
+    opacity: 1;
+    transform: rotate(0);
+  }
+
+  .card:hover .bottom-text {
+    letter-spacing: 3px;
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .card:hover .content .logo-bottom-text {
+    opacity: 1;
+    letter-spacing: 9.5px;
+  }
+
+  .card:hover .trail {
+    animation: trail 1s ease-in-out;
+  }
+
+  @keyframes opacity {
+    0% {
+      border-right: 1px solid transparent;
+    }
+    10% {
+      border-right: 1px solid #bd9f67;
+    }
+    80% {
+      border-right: 1px solid #bd9f67;
+    }
+    100% {
+      border-right: 1px solid transparent;
+    }
+  }
+
+  @keyframes trail {
+    0% {
+      background: linear-gradient(90deg, rgba(189, 159, 103, 0) 90%, rgb(189, 159, 103) 100%);
+      opacity: 0;
+    }
+    30% {
+      background: linear-gradient(90deg, rgba(189, 159, 103, 0) 70%, rgb(189, 159, 103) 100%);
+      opacity: 1;
+    }
+    70% {
+      background: linear-gradient(90deg, rgba(189, 159, 103, 0) 70%, rgb(189, 159, 103) 100%);
+      opacity: 1;
+    }
+    95% {
+      background: linear-gradient(90deg, rgba(189, 159, 103, 0) 90%, rgb(189, 159, 103) 100%);
+      opacity: 0;
+    }
+  }
+</style>
